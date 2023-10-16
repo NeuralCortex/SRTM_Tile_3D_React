@@ -1,5 +1,7 @@
 # SRTM Tile 3D-Viewer React 1.0.0
 
+![image](https://github.com/NeuralCortex/SRTM_Tile_3D_React/blob/main/app.png)
+
 The SRTM Tile 3D viewer is a Web-App besed on React that enables the user to view topographic data</br>
 of the NASA mission STS-99 [Shuttle Radar Topography Mission (SRTM)](https://en.wikipedia.org/wiki/STS-99) in three dimensions.</br>
 The web app can load and display both SRTM-3 and SRTM-1 tiles.</br>
