@@ -22,6 +22,17 @@ export class Control extends Component {
     res: { name: "Low resolution", steps: 50 },
     lon: 0,
     lat: 0,
+    tableheight: 0,
+  };
+
+  componentDidMount() {
+    this.setTableHeight();
+  }
+
+  setTableHeight = () => {
+    let control = document.getElementById("control");
+    let rectControl = control.getBoundingClientRect();
+    this.setState({ tableheight: rectControl.height - 311.92 - 48 - 2 * 16 });
   };
 
   onChangeColor = (value, row) => {
@@ -95,16 +106,16 @@ export class Control extends Component {
         detail: "Duplicate found",
       });
     }
-  
+
     arr.sort(this.compare);
-   
+
     this.props.setColors(arr);
     this.setState({ dlgColorVisible: false });
   };
 
   deleteRow = () => {
     let sel = this.state.selectedRow;
-   
+
     if (sel == null) {
       this.toast.show({
         severity: "error",
@@ -182,6 +193,8 @@ export class Control extends Component {
   };
 
   render() {
+    window.addEventListener("resize", this.setTableHeight);
+
     const res = [
       { name: "Low resolution", steps: 50 },
       { name: "Mid resolution", steps: 150 },
@@ -210,6 +223,7 @@ export class Control extends Component {
           Control
         </div>
         <div
+          id="control"
           className="w3-white w3-container w3-padding-16"
           style={{ height: "calc(100vh - 157.48px - 35.98px - 5*16px)" }}
         >
@@ -281,20 +295,23 @@ export class Control extends Component {
               </div>
             </div>
             <label className="w3-text-blue w3-col below">Color-Editor</label>
-            <DataTable
-              size="small"
-              className="w3-tiny w3-col"
-              value={this.props.colors}
-              //editable={true}
-              selectionMode="single"
-              selection={this.state.selectedRow}
-              onSelectionChange={(e) => this.setState({ selectedRow: e.value })}
-            >
-              <Column field="pct" header="Percent" body={this.percentCell} />
-              <Column field="colorHex" header="Color" body={this.colorCell} />
-              <Column field="colorHex" header="Hex" editor={this.colorEditor} />
-            </DataTable>
           </div>
+          <DataTable
+            size="small"
+            className="w3-tiny w3-col"
+            value={this.props.colors}
+            //editable={true}
+            selectionMode="single"
+            selection={this.state.selectedRow}
+            onSelectionChange={(e) => this.setState({ selectedRow: e.value })}
+            scrollable
+            scrollHeight={this.state.tableheight}
+          >
+            <Column field="pct" header="Percent" body={this.percentCell} />
+            <Column field="colorHex" header="Color" body={this.colorCell} />
+            <Column field="colorHex" header="Hex" editor={this.colorEditor} />
+          </DataTable>
+
           <div className="w3-row">
             <div className="w3-half">
               <Button

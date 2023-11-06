@@ -101,11 +101,9 @@ export class View3D extends Component {
   };
 
   drawScene = (gl, objects3d) => {
-    if (gl === null) {
-      console.log("gl null");
+    if(gl===null){
       return;
     }
-
     gl.clearColor(0.0, 0.0, 0.0, 1.0); // Clear to black, fully opaque
     gl.clearDepth(1.0); // Clear everything
     gl.enable(gl.DEPTH_TEST); // Enable depth testing
